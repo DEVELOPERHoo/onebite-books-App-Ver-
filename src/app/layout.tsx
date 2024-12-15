@@ -3,9 +3,11 @@ import Link from "next/link";
 import style from "./layout.module.css";
 import { BookData } from "@/types";
 
+// 중복된 API 요청을 캐싱하는 리퀘스트 메모이제이션 동작
 async function Footer() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`
+    `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
+    { cache: "force-cache" }
   );
 
   if (!response.ok) {
