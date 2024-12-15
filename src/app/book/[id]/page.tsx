@@ -1,4 +1,11 @@
+import { notFound } from "next/navigation";
 import style from "./page.module.css";
+
+// export const dynamicParams = false; //  파라미터 이외의 값은 404
+// 정적인 파라미터 생성(동적 경로로 같은 페이지를 static 페이지로 설정)
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2" }, { id: "3" }];
+}
 
 export default async function Page({
   params,
@@ -10,6 +17,9 @@ export default async function Page({
   );
 
   if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    }
     return <div>오류가 발생했습니다...</div>;
   }
   const book = await response.json();
